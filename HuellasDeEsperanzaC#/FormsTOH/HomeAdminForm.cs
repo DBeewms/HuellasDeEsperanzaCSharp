@@ -17,7 +17,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     public partial class HomeAdminForm : Form
     {
         private Usuario usuarioActual;
-        private GestorUsuario gestorUsuario;
         private GestorAdopcion gestorAdopcionUser;
 
         public HomeAdminForm(Usuario usuario, GestorAdopcion gestorAdopcion)
@@ -80,17 +79,17 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void button3_Click(object sender, EventArgs e)
         {
-            AdminAddMascot adminAddMascot = new AdminAddMascot(usuarioActual, gestorAdopcionUser);
-            adminAddMascot.Show();
-            this.Hide();
+
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             try
             {
-                // Obtener la lista de mascotas disponibles para adopción
-                List<Mascota> mascotasDisponibles = gestorAdopcionUser.ObtenerMascotasDisponibles();
+                GestorMascota gestorMascota = new GestorMascota();
+                gestorMascota.CargarDatosMascotas();
+                // Obtener la lista de mascotas 
+                List<Mascota> mascotasDisponibles = gestorMascota.GetListaMascotas();
 
                 if (mascotasDisponibles == null || !mascotasDisponibles.Any())
                 {
@@ -167,9 +166,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void btnConfiguracion_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Hide();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)

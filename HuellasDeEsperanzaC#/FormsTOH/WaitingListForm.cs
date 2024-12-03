@@ -18,7 +18,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     public partial class WaitingListForm : Form
     {
         private Usuario usuarioActual;
-        private GestorUsuario gestorUsuario;
         private GestorAdopcion gestorAdopcionUser;
 
         public WaitingListForm(Usuario usuario, GestorAdopcion gestorAdopcion)
@@ -30,7 +29,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void WaitingListForm_Load(object sender, EventArgs e)
         {
-            gestorAdopcionUser.RecargarDatosSolicitudes();
+            gestorAdopcionUser.CargarDatosSolicitudes();
             CargarMascotaEnEspera();
 
         }
@@ -38,7 +37,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         private void CargarMascotaEnEspera()
         {
             // Obtener la primera solicitud en espera del usuario actual
-            SolicitudAdopcion solicitudEnEspera = gestorAdopcionUser.ObtenerPrimeraSolicitudEnEsperaPorUsuario(usuarioActual.Id);
+            SolicitudAdopcion solicitudEnEspera = gestorAdopcionUser.ObtenerSolicitudPorId(usuarioActual.Id);
 
             if (solicitudEnEspera != null)
             {
@@ -118,9 +117,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void btnConfiguracion_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Close();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
 
         private void button11_Click(object sender, EventArgs e)

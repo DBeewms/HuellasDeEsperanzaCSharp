@@ -17,14 +17,13 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     {
         private Usuario usuarioActual;
         private GestorAdopcion gestorAdopcionUser;
-        private GestorUsuario gestorUsuario;
 
         public HomeGeneralForm(Usuario usuario, GestorAdopcion gestorAdopcion)
         {
             InitializeComponent();
             this.usuarioActual = usuario;
             this.gestorAdopcionUser = gestorAdopcion;
-            showUsuario();
+            // showUsuario();
             SetSaludo();
         }
 
@@ -57,35 +56,28 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.Close();
         }
 
-        public void showUsuario()
-        {
-            listBox1.Items.Clear();
-
-            if (usuarioActual.Tipo == TipoUsuario.Comun || usuarioActual.Tipo == TipoUsuario.Administrador)
-            {
-                listBox1.Items.Add(usuarioActual.NombreCompleto ?? "Nombre no disponible");
-                listBox1.Items.Add(usuarioActual.NumeroCedula ?? "Cédula no disponible");
-                listBox1.Items.Add(usuarioActual.Ocupacion ?? "Ocupación no disponible");
-                listBox1.Items.Add("Mascotas Adoptadas: " + usuarioActual.MascotasAdoptadas.Count);
-                listBox1.Items.Add("Actividades Inscritas: " + usuarioActual.ActividadesInscritas.Count);
-            }
-            else if (usuarioActual.Tipo == TipoUsuario.Organizacion)
-            {
-                listBox1.Items.Add(usuarioActual.NombreOrganizacion ?? "Nombre de la organización no disponible");
-                listBox1.Items.Add(usuarioActual.Descripcion ?? "Descripción no disponible");
-                listBox1.Items.Add("Mascotas Ofrecidas para Adopción: " + usuarioActual.MascotasOfrecidasParaAdopcion.Count);
-                listBox1.Items.Add("Actividades Organizadas: " + usuarioActual.ActividadesOrganizadas.Count);
-            }
-
-            listBox1.Items.Add(usuarioActual.CorreoElectronico ?? "Correo no disponible");
-            listBox1.Items.Add(usuarioActual.Direccion ?? "Dirección no disponible");
-            listBox1.Items.Add(usuarioActual.NumeroTelefono ?? "Teléfono no disponible");
-            listBox1.Items.Add(usuarioActual.Tipo.ToString());
-        }
+        // public void showUsuario()
+        // {
+        //     listBox1.Items.Clear();
+        //     listBox1.Items.Add(usuarioActual.NombreCompleto);
+        //     listBox1.Items.Add(usuarioActual.CorreoElectronico);
+        //     listBox1.Items.Add(usuarioActual.Tipo);
+        //     listBox1.Items.Add(usuarioActual.Direccion);
+        //     listBox1.Items.Add(usuarioActual.NumeroTelefono);
+        //     if (usuarioActual.NumeroCedula != null)
+        //     {
+        //         listBox1.Items.Add(usuarioActual.NumeroCedula);
+        //     }
+        //     if (usuarioActual.Ocupacion != null)
+        //     {
+        //         listBox1.Items.Add(usuarioActual.Ocupacion);
+        //     }
+        //     listBox1.Items.Add(usuarioActual.Descripcion);
+        // }
 
         private void HomeGeneralForm_Load(object sender, EventArgs e)
         {
-            gestorAdopcionUser.RecargarDatosSolicitudes();
+            gestorAdopcionUser.CargarDatosSolicitudes();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -142,9 +134,11 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void btnConfiguracion_Click_1(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Hide();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
+            // TODO
+            // Actualizar saludo después de configurar
+            SetSaludo();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -184,7 +178,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         private void SetSaludo()
         {
             string saludo = ObtenerSaludo();
-            lblSaludo.Text = $"{saludo}, {usuarioActual.NombreCompleto}";
+            lblSaludo.Text = $"{saludo}, {usuarioActual.NombreCompleto.Split(' ')[0]}!";
         }
     }
 }

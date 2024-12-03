@@ -18,7 +18,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     {
         private Usuario usuarioActual;
         private GestorAdopcion gestorAdopcionUser;
-        private GestorUsuario gestorUsuario;
         private string rutaImagenSeleccionada;
 
         public AddMascot(Usuario usuario, GestorAdopcion gestorAdopcion)
@@ -187,9 +186,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void button7_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Close();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
     }
 }

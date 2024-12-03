@@ -111,7 +111,6 @@
             this.btnCerrarSesion.TabIndex = 8;
             this.btnCerrarSesion.Text = "Cerrar Sesión";
             this.btnCerrarSesion.UseVisualStyleBackColor = false;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
             // button8
             // 
@@ -183,7 +182,6 @@
             this.button5.Text = "   Reportes";
             this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -218,7 +216,6 @@
             this.button3.Text = "   Agregar Mascotas";
             this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -253,7 +250,6 @@
             this.button1.Text = "    Inicio";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel2
             // 
@@ -264,7 +260,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1031, 36);
             this.panel2.TabIndex = 3;
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             // 
             // panel6
             // 
@@ -289,7 +284,6 @@
             this.button11.Size = new System.Drawing.Size(40, 36);
             this.button11.TabIndex = 10;
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button10
             // 
@@ -303,7 +297,6 @@
             this.button10.Size = new System.Drawing.Size(40, 36);
             this.button10.TabIndex = 11;
             this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button9
             // 
@@ -317,7 +310,6 @@
             this.button9.Size = new System.Drawing.Size(40, 36);
             this.button9.TabIndex = 12;
             this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // panel3
             // 

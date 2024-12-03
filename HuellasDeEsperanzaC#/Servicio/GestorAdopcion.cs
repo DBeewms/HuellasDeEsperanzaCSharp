@@ -1,5 +1,4 @@
 ﻿using HuellasDeEsperanzaC_.Models;
-using MetroFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,149 +11,134 @@ namespace HuellasDeEsperanzaC_.Servicio
 {
     public class GestorAdopcion
     {
-        private List<SolicitudAdopcion> solicitudes;
+        private List<SolicitudAdopcion> solicitudes = new List<SolicitudAdopcion>();
         private List<Mascota> mascotas;
         private List<Usuario> usuarios;
 
-       
-        public List<SolicitudAdopcion> SolicitudesAdopcion()
-        {
-            return solicitudes;
-        }
-
         public GestorAdopcion()
         {
-            solicitudes = new List<SolicitudAdopcion>();
-            mascotas = new List<Mascota>();
-            usuarios = new List<Usuario>();
             CargarDatosSolicitudes();
             CargarDatosMascotas();
             CargarDatosUsuarios();
         }
 
+        // Obtener todas las solicitudes de adopción
+        public List<SolicitudAdopcion> ObtenerSolicitudesAdopcion()
+        {
+            return solicitudes;
+        }
+
+        // Obtener una solicitud por ID
+        public SolicitudAdopcion ObtenerSolicitudPorId(int solicitudId)
+        {
+            return solicitudes.FirstOrDefault(s => s.Id == solicitudId);
+        }
+
+        // Crear una nueva solicitud de adopción
         public void CrearSolicitudAdopcion(int usuarioId, int mascotaId, Form formulario)
         {
-            GestorUsuario gestorUsuario = new GestorUsuario();
-            gestorUsuario.CargarDatosUsuarios();
-
-            if (!gestorUsuario.EsPerfilCompleto(usuarioId))
-            {
-                MetroMessageBox.Show(formulario, "Tu perfil no está completo. Por favor, completa tu perfil antes de solicitar una adopción.", "Perfil incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             if (UsuarioPendienteAdopcion(usuarioId))
             {
-                MetroMessageBox.Show(formulario, "Ya tienes una solicitud de adopción pendiente.", "Adopción pendiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(formulario, "Ya tienes una solicitud de adopción pendiente.", "Adopción pendiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            SolicitudAdopcion nuevaSolicitud = new SolicitudAdopcion();
-            if (solicitudes.Count > 0)
-            {
-                int maxId = solicitudes.Max(s => s.Id);
-                nuevaSolicitud.Id = maxId + 1;
-            }
-            else
-            {
-                nuevaSolicitud.Id = 1;
-            }
+            int nuevoId = solicitudes.Count > 0 ? solicitudes.Max(s => s.Id) + 1 : 1;
 
-            nuevaSolicitud.UsuarioId = usuarioId;
-            nuevaSolicitud.MascotaId = mascotaId;
-            nuevaSolicitud.FechaSolicitud = DateTime.Now;
-            nuevaSolicitud.Estado = EstadoSolicitud.Pendiente;
+            SolicitudAdopcion nuevaSolicitud = new SolicitudAdopcion
+            {
+                Id = nuevoId,
+                UsuarioId = usuarioId,
+                MascotaId = mascotaId,
+                FechaSolicitud = DateTime.Now,
+                Estado = EstadoSolicitud.Pendiente,
+                Motivo = string.Empty
+            };
 
             solicitudes.Add(nuevaSolicitud);
             GuardarDatosSolicitudes();
 
-            // Mensaje de éxito
-            MetroMessageBox.Show(formulario, "Tu solicitud de adopción ha sido enviada exitosamente.", "Solicitud enviada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(formulario, "Solicitud de adopción creada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public List<Mascota> ObtenerMascotasDisponibles()
-        {
-            return mascotas.Where(m => !m.EstaAdoptado || solicitudes.Any(s => s.MascotaId == m.Id && s.Estado == EstadoSolicitud.Pendiente)).ToList();
-        }
-
+        // Aprobar una solicitud
         public void AprobarSolicitud(int solicitudId, Usuario administrador)
         {
-            for (int i = 0; i < solicitudes.Count; i++)
+            SolicitudAdopcion solicitud = ObtenerSolicitudPorId(solicitudId);
+            if (solicitud != null)
             {
-                if (solicitudes[i].Id == solicitudId)
+                solicitud.AprobarSolicitud(administrador);
+                Mascota mascota = ObtenerMascotaPorId(solicitud.MascotaId);
+                if (mascota != null)
                 {
-                    solicitudes[i].AprobarSolicitud(administrador);
-                    Mascota mascota = ObtenerMascotaPorId(solicitudes[i].MascotaId);
-                    if (mascota != null)
-                    {
-                        mascota.EstaAdoptado = true;
-                    }
-                    GuardarDatosSolicitudes();
-                    break;
+                    mascota.EstaAdoptado = true;
+                    mascota.AdoptanteId = solicitud.UsuarioId;
+
+                    // Actualizar el estado de la mascota en GestorMascota
+                    GestorMascota gestorMascota = new GestorMascota();
+                    gestorMascota.ActualizarEstadoMascota(mascota);
+
+                    GuardarDatosMascotas();
                 }
+                GuardarDatosSolicitudes();
             }
         }
 
+        // Rechazar una solicitud
         public void RechazarSolicitud(int solicitudId, Usuario administrador, string motivo)
         {
-            for (int i = 0; i < solicitudes.Count; i++)
+            SolicitudAdopcion solicitud = ObtenerSolicitudPorId(solicitudId);
+            if (solicitud != null)
             {
-                if (solicitudes[i].Id == solicitudId)
-                {
-                    solicitudes[i].RechazarSolicitud(administrador, motivo);
-                    GuardarDatosSolicitudes();
-                    break;
-                }
+                solicitud.RechazarSolicitud(administrador, motivo);
+                GuardarDatosSolicitudes();
             }
         }
 
+        //// Obtener mascotas pendientes
+        //public List<Mascota> ObtenerMascotas()
+        //{
+        //    return mascotas.Where(m => !m.EstaAdoptado && !solicitudes.Any(s => s.MascotaId == m.Id && s.Estado == EstadoSolicitud.Pendiente)).ToList();
+        //}
+
+        // Obtener mascota por ID
         public Mascota ObtenerMascotaPorId(int mascotaId)
         {
-            return mascotas.FirstOrDefault(mascota => mascota.Id == mascotaId);
+            return mascotas.FirstOrDefault(m => m.Id == mascotaId);
         }
 
+        // Obtener usuario por ID
         public Usuario ObtenerUsuarioPorId(int usuarioId)
         {
-            return usuarios.FirstOrDefault(usuario => usuario.Id == usuarioId);
+            return usuarios.FirstOrDefault(u => u.Id == usuarioId);
         }
 
-        private void GuardarDatosSolicitudes()
+        // Verificar si el usuario tiene una solicitud pendiente
+        public bool UsuarioPendienteAdopcion(int usuarioId)
         {
-            using (FileStream fileStream = new FileStream("solicitudes.dat", FileMode.Create, FileAccess.Write))
-            using (BinaryWriter writer = new BinaryWriter(fileStream))
-            {
-                foreach (var solicitud in solicitudes)
-                {
-                    writer.Write(solicitud.Id);
-                    writer.Write(solicitud.UsuarioId);
-                    writer.Write(solicitud.MascotaId);
-                    writer.Write(solicitud.FechaSolicitud.ToBinary());
-                    writer.Write((int)solicitud.Estado);
-                    if (solicitud.Motivo != null)
-                    {
-                        writer.Write(solicitud.Motivo);
-                    }
-                    else
-                    {
-                        writer.Write(string.Empty);
-                    }
-                }
-            }
+            return solicitudes.Any(s => s.UsuarioId == usuarioId && s.Estado == EstadoSolicitud.Pendiente);
         }
 
-        private void CargarDatosSolicitudes()
+        // Obtener solicitudes en espera
+        public List<SolicitudAdopcion> ObtenerSolicitudesEnEspera()
+        {
+            return solicitudes.Where(s => s.Estado == EstadoSolicitud.Pendiente).ToList();
+        }
+
+        // Métodos para cargar y guardar datos
+        public void CargarDatosSolicitudes()
         {
             solicitudes.Clear();
 
-            if (!File.Exists("solicitudes.dat"))
-            {
-                return;
-            }
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "solicitudes.dat");
 
-            using (FileStream fileStream = new FileStream("solicitudes.dat", FileMode.Open, FileAccess.Read))
-            using (BinaryReader reader = new BinaryReader(fileStream))
+            if (!File.Exists(path))
+                return;
+
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+            using (BinaryReader reader = new BinaryReader(fs))
             {
-                while (fileStream.Position < fileStream.Length)
+                while (fs.Position < fs.Length)
                 {
                     SolicitudAdopcion solicitud = new SolicitudAdopcion
                     {
@@ -165,15 +149,28 @@ namespace HuellasDeEsperanzaC_.Servicio
                         Estado = (EstadoSolicitud)reader.ReadInt32(),
                         Motivo = reader.ReadString()
                     };
-
                     solicitudes.Add(solicitud);
                 }
             }
         }
 
-        public bool UsuarioPendienteAdopcion(int usuarioId)
+        public void GuardarDatosSolicitudes()
         {
-            return solicitudes.Any(s => s.UsuarioId == usuarioId && s.Estado == EstadoSolicitud.Pendiente);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "solicitudes.dat");
+
+            using (FileStream fs = new FileStream(path, FileMode.Create))
+            using (BinaryWriter writer = new BinaryWriter(fs))
+            {
+                foreach (var solicitud in solicitudes)
+                {
+                    writer.Write(solicitud.Id);
+                    writer.Write(solicitud.UsuarioId);
+                    writer.Write(solicitud.MascotaId);
+                    writer.Write(solicitud.FechaSolicitud.ToBinary());
+                    writer.Write((int)solicitud.Estado);
+                    writer.Write(solicitud.Motivo ?? string.Empty);
+                }
+            }
         }
 
         private void CargarDatosMascotas()
@@ -183,27 +180,18 @@ namespace HuellasDeEsperanzaC_.Servicio
             mascotas = gestorMascota.GetListaMascotas();
         }
 
+        private void GuardarDatosMascotas()
+        {
+            GestorMascota gestorMascota = new GestorMascota();
+            gestorMascota.SetListaMascotas(mascotas);
+            gestorMascota.EscribirArchivoMascotas();
+        }
+
         private void CargarDatosUsuarios()
         {
             GestorUsuario gestorUsuario = new GestorUsuario();
             gestorUsuario.CargarDatosUsuarios();
             usuarios = gestorUsuario.GetListaUsuarios();
-        }
-
-        public void RecargarDatosSolicitudes()
-        {
-            solicitudes.Clear();
-            CargarDatosSolicitudes();
-        }
-
-        public SolicitudAdopcion ObtenerPrimeraSolicitudEnEsperaPorUsuario(int usuarioId)
-        {
-            return solicitudes.FirstOrDefault(solicitud => solicitud.UsuarioId == usuarioId && solicitud.Estado == EstadoSolicitud.Pendiente);
-        }
-
-        public List<SolicitudAdopcion> ObtenerSolicitudesEnEspera()
-        {
-            return solicitudes.Where(solicitud => solicitud.Estado == EstadoSolicitud.Pendiente).ToList();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using HuellasDeEsperanzaC_.Models;
 using HuellasDeEsperanzaC_.Servicio;
-using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +18,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     {
         private Usuario usuarioActual;
         private GestorAdopcion gestorAdopcionUser;
-        private GestorUsuario gestorUsuario;
         private string rutaImagenSeleccionada;
 
         public AdminAddMascot(Usuario usuario, GestorAdopcion gestorAdopcion)
@@ -45,66 +43,15 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void button5_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Obtener la lista de mascotas disponibles para adopción
-                List<Mascota> mascotasDisponibles = gestorAdopcionUser.ObtenerMascotasDisponibles();
-
-                if (mascotasDisponibles == null || !mascotasDisponibles.Any())
-                {
-                    MessageBox.Show("No hay mascotas disponibles para mostrar en el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // Manejar valores nulos y formatear datos
-                foreach (var mascota in mascotasDisponibles)
-                {
-                    // Validar propiedades
-                    mascota.FechaNacimiento = (mascota.FechaNacimiento == DateTime.MinValue) ? DateTime.Now : mascota.FechaNacimiento;
-
-                    mascota.Edad = mascota.CalcularEdad();
-
-                    mascota.Tamaño = string.IsNullOrEmpty(mascota.Tamaño) ? "Sin tamaño" : mascota.Tamaño;
-                    mascota.OrganizacionId = (mascota.OrganizacionId == 0) ? -1 : mascota.OrganizacionId;
-                    mascota.EstaAdoptado = mascota.EstaAdoptado ? true : false;
-                }
-
-                // Crear una fuente de datos para el ReportViewer
-                ReportDataSource rds = new ReportDataSource("DsDatos", mascotasDisponibles);
-
-                ViewReportForm viewReportForm = new ViewReportForm(usuarioActual, gestorAdopcionUser);
-
-                viewReportForm.reportViewer1.LocalReport.DataSources.Clear();
-
-                viewReportForm.reportViewer1.LocalReport.DataSources.Add(rds);
-
-                try
-                {
-                    viewReportForm.reportViewer1.LocalReport.ReportEmbeddedResource = "HuellasDeEsperanzaC_.Reportes.RptMascotas.rdlc";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al cargar el recurso incrustado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                viewReportForm.reportViewer1.RefreshReport();
-
-
-                viewReportForm.Show();
-                this.Close  ();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar el reporte: " + ex.Message);
-            }
+            ViewReportForm viewReportForm = new ViewReportForm(usuarioActual, gestorAdopcionUser);
+            viewReportForm.Show();
+            this.Close();
         }
 
         private void btnConfiguracion_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario,gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Close();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)

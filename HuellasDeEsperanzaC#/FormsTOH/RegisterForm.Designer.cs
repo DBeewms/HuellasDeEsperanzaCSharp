@@ -34,7 +34,7 @@
             this.roundButton2 = new HuellasDeEsperanzaC_.CustomUserControls.RoundButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cbEsORA = new System.Windows.Forms.CheckBox();
+            this.isORA = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,9 +45,9 @@
             this.tbNombreCompleto = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.tbEmail = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.tbPass = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
-            this.tbDireccion = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
-            this.tbTelefono = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
-            this.tbDescripcion = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
+            this.tbOra1 = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
+            this.tbOra2 = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
+            this.tbOra3 = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnCerrar = new System.Windows.Forms.Button();
@@ -107,7 +107,7 @@
             this.label1.Location = new System.Drawing.Point(39, 214);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 30);
+            this.label1.Size = new System.Drawing.Size(300, 37);
             this.label1.TabIndex = 10;
             this.label1.Text = "¿Ya tienes una cuenta?";
             // 
@@ -119,31 +119,31 @@
             this.label3.Location = new System.Drawing.Point(361, 29);
             this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 37);
+            this.label3.Size = new System.Drawing.Size(215, 46);
             this.label3.TabIndex = 0;
             this.label3.Text = "¡Regístrate!";
             // 
-            // cbEsORA
+            // isORA
             // 
-            this.cbEsORA.AutoSize = true;
-            this.cbEsORA.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbEsORA.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbEsORA.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbEsORA.Location = new System.Drawing.Point(392, 97);
-            this.cbEsORA.Name = "cbEsORA";
-            this.cbEsORA.Size = new System.Drawing.Size(447, 23);
-            this.cbEsORA.TabIndex = 0;
-            this.cbEsORA.Text = "¿Registrar como Organización de Rescate Animal?";
-            this.cbEsORA.UseVisualStyleBackColor = true;
-            this.cbEsORA.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            this.cbEsORA.Click += new System.EventHandler(this.isORA_Click);
+            this.isORA.AutoSize = true;
+            this.isORA.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.isORA.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.isORA.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.isORA.Location = new System.Drawing.Point(392, 97);
+            this.isORA.Name = "isORA";
+            this.isORA.Size = new System.Drawing.Size(544, 30);
+            this.isORA.TabIndex = 0;
+            this.isORA.Text = "¿Registrar como Organización de Rescate Animal?";
+            this.isORA.UseVisualStyleBackColor = true;
+            this.isORA.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.isORA.Click += new System.EventHandler(this.isORA_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(365, 153);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 18);
+            this.label2.Size = new System.Drawing.Size(192, 23);
             this.label2.TabIndex = 11;
             this.label2.Text = "Nombre Completo:";
             // 
@@ -152,7 +152,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(365, 202);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(153, 18);
+            this.label4.Size = new System.Drawing.Size(196, 23);
             this.label4.TabIndex = 11;
             this.label4.Text = "Correo Electrónico:";
             // 
@@ -161,7 +161,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(365, 251);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 18);
+            this.label5.Size = new System.Drawing.Size(126, 23);
             this.label5.TabIndex = 12;
             this.label5.Text = "Contraseña:";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -171,7 +171,7 @@
             this.lblORA3.AutoSize = true;
             this.lblORA3.Location = new System.Drawing.Point(367, 478);
             this.lblORA3.Name = "lblORA3";
-            this.lblORA3.Size = new System.Drawing.Size(99, 18);
+            this.lblORA3.Size = new System.Drawing.Size(131, 23);
             this.lblORA3.TabIndex = 15;
             this.lblORA3.Text = "Descripción:";
             this.lblORA3.Visible = false;
@@ -181,7 +181,7 @@
             this.lblORA2.AutoSize = true;
             this.lblORA2.Location = new System.Drawing.Point(365, 349);
             this.lblORA2.Name = "lblORA2";
-            this.lblORA2.Size = new System.Drawing.Size(153, 18);
+            this.lblORA2.Size = new System.Drawing.Size(198, 23);
             this.lblORA2.TabIndex = 14;
             this.lblORA2.Text = "Número Telefónico:";
             this.lblORA2.Visible = false;
@@ -191,7 +191,7 @@
             this.lblORA1.AutoSize = true;
             this.lblORA1.Location = new System.Drawing.Point(365, 300);
             this.lblORA1.Name = "lblORA1";
-            this.lblORA1.Size = new System.Drawing.Size(82, 18);
+            this.lblORA1.Size = new System.Drawing.Size(109, 23);
             this.lblORA1.TabIndex = 13;
             this.lblORA1.Text = "Dirección:";
             this.lblORA1.Visible = false;
@@ -228,7 +228,7 @@
             this.tbNombreCompleto.Name = "tbNombreCompleto";
             this.tbNombreCompleto.Padding = new System.Windows.Forms.Padding(7);
             this.tbNombreCompleto.PasswordChar = false;
-            this.tbNombreCompleto.Size = new System.Drawing.Size(327, 33);
+            this.tbNombreCompleto.Size = new System.Drawing.Size(327, 38);
             this.tbNombreCompleto.TabIndex = 1;
             this.tbNombreCompleto.Texts = "";
             this.tbNombreCompleto.UnderlinedStyle = true;
@@ -250,7 +250,7 @@
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Padding = new System.Windows.Forms.Padding(7);
             this.tbEmail.PasswordChar = false;
-            this.tbEmail.Size = new System.Drawing.Size(327, 33);
+            this.tbEmail.Size = new System.Drawing.Size(327, 38);
             this.tbEmail.TabIndex = 2;
             this.tbEmail.Texts = "";
             this.tbEmail.UnderlinedStyle = true;
@@ -272,93 +272,93 @@
             this.tbPass.Name = "tbPass";
             this.tbPass.Padding = new System.Windows.Forms.Padding(7);
             this.tbPass.PasswordChar = true;
-            this.tbPass.Size = new System.Drawing.Size(327, 33);
+            this.tbPass.Size = new System.Drawing.Size(327, 38);
             this.tbPass.TabIndex = 3;
             this.tbPass.Texts = "";
             this.tbPass.UnderlinedStyle = true;
             this.tbPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPass_KeyPress);
             // 
-            // tbDireccion
+            // tbOra1
             // 
-            this.tbDireccion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
-            this.tbDireccion.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
-            this.tbDireccion.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
-            this.tbDireccion.BorderSize = 2;
-            this.tbDireccion.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbDireccion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDireccion.ForeColor = System.Drawing.Color.DimGray;
-            this.tbDireccion.Location = new System.Drawing.Point(528, 285);
-            this.tbDireccion.Margin = new System.Windows.Forms.Padding(4);
-            this.tbDireccion.MaxLength = 50;
-            this.tbDireccion.Multiline = false;
-            this.tbDireccion.Name = "tbDireccion";
-            this.tbDireccion.Padding = new System.Windows.Forms.Padding(7);
-            this.tbDireccion.PasswordChar = false;
-            this.tbDireccion.Size = new System.Drawing.Size(327, 33);
-            this.tbDireccion.TabIndex = 4;
-            this.tbDireccion.Texts = "";
-            this.tbDireccion.UnderlinedStyle = true;
-            this.tbDireccion.Visible = false;
-            this.tbDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra1_KeyPress);
+            this.tbOra1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
+            this.tbOra1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
+            this.tbOra1.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
+            this.tbOra1.BorderSize = 2;
+            this.tbOra1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbOra1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbOra1.ForeColor = System.Drawing.Color.DimGray;
+            this.tbOra1.Location = new System.Drawing.Point(528, 285);
+            this.tbOra1.Margin = new System.Windows.Forms.Padding(4);
+            this.tbOra1.MaxLength = 50;
+            this.tbOra1.Multiline = false;
+            this.tbOra1.Name = "tbOra1";
+            this.tbOra1.Padding = new System.Windows.Forms.Padding(7);
+            this.tbOra1.PasswordChar = false;
+            this.tbOra1.Size = new System.Drawing.Size(327, 38);
+            this.tbOra1.TabIndex = 4;
+            this.tbOra1.Texts = "";
+            this.tbOra1.UnderlinedStyle = true;
+            this.tbOra1.Visible = false;
+            this.tbOra1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra1_KeyPress);
             // 
-            // tbTelefono
+            // tbOra2
             // 
-            this.tbTelefono.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
-            this.tbTelefono.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
-            this.tbTelefono.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
-            this.tbTelefono.BorderSize = 2;
-            this.tbTelefono.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbTelefono.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTelefono.ForeColor = System.Drawing.Color.DimGray;
-            this.tbTelefono.Location = new System.Drawing.Point(528, 334);
-            this.tbTelefono.Margin = new System.Windows.Forms.Padding(4);
-            this.tbTelefono.MaxLength = 9;
-            this.tbTelefono.Multiline = false;
-            this.tbTelefono.Name = "tbTelefono";
-            this.tbTelefono.Padding = new System.Windows.Forms.Padding(7);
-            this.tbTelefono.PasswordChar = false;
-            this.tbTelefono.Size = new System.Drawing.Size(327, 33);
-            this.tbTelefono.TabIndex = 5;
-            this.tbTelefono.Texts = "";
-            this.tbTelefono.UnderlinedStyle = true;
-            this.tbTelefono.Visible = false;
-            this.tbTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra2_KeyPress);
+            this.tbOra2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
+            this.tbOra2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
+            this.tbOra2.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
+            this.tbOra2.BorderSize = 2;
+            this.tbOra2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbOra2.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbOra2.ForeColor = System.Drawing.Color.DimGray;
+            this.tbOra2.Location = new System.Drawing.Point(528, 334);
+            this.tbOra2.Margin = new System.Windows.Forms.Padding(4);
+            this.tbOra2.MaxLength = 9;
+            this.tbOra2.Multiline = false;
+            this.tbOra2.Name = "tbOra2";
+            this.tbOra2.Padding = new System.Windows.Forms.Padding(7);
+            this.tbOra2.PasswordChar = false;
+            this.tbOra2.Size = new System.Drawing.Size(327, 38);
+            this.tbOra2.TabIndex = 5;
+            this.tbOra2.Texts = "";
+            this.tbOra2.UnderlinedStyle = true;
+            this.tbOra2.Visible = false;
+            this.tbOra2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra2_KeyPress);
             // 
-            // tbDescripcion
+            // tbOra3
             // 
-            this.tbDescripcion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
-            this.tbDescripcion.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
-            this.tbDescripcion.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
-            this.tbDescripcion.BorderSize = 2;
-            this.tbDescripcion.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbDescripcion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDescripcion.ForeColor = System.Drawing.Color.DimGray;
-            this.tbDescripcion.Location = new System.Drawing.Point(528, 383);
-            this.tbDescripcion.Margin = new System.Windows.Forms.Padding(4);
-            this.tbDescripcion.MaxLength = 100;
-            this.tbDescripcion.Multiline = true;
-            this.tbDescripcion.Name = "tbDescripcion";
-            this.tbDescripcion.Padding = new System.Windows.Forms.Padding(7);
-            this.tbDescripcion.PasswordChar = false;
-            this.tbDescripcion.Size = new System.Drawing.Size(327, 113);
-            this.tbDescripcion.TabIndex = 6;
-            this.tbDescripcion.Texts = "";
-            this.tbDescripcion.UnderlinedStyle = true;
-            this.tbDescripcion.Visible = false;
-            this.tbDescripcion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra3_KeyPress);
+            this.tbOra3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
+            this.tbOra3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(136)))), ((int)(((byte)(115)))));
+            this.tbOra3.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
+            this.tbOra3.BorderSize = 2;
+            this.tbOra3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbOra3.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbOra3.ForeColor = System.Drawing.Color.DimGray;
+            this.tbOra3.Location = new System.Drawing.Point(528, 383);
+            this.tbOra3.Margin = new System.Windows.Forms.Padding(4);
+            this.tbOra3.MaxLength = 100;
+            this.tbOra3.Multiline = true;
+            this.tbOra3.Name = "tbOra3";
+            this.tbOra3.Padding = new System.Windows.Forms.Padding(7);
+            this.tbOra3.PasswordChar = false;
+            this.tbOra3.Size = new System.Drawing.Size(327, 113);
+            this.tbOra3.TabIndex = 6;
+            this.tbOra3.Texts = "";
+            this.tbOra3.UnderlinedStyle = true;
+            this.tbOra3.Visible = false;
+            this.tbOra3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbOra3_KeyPress);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.lblORA3);
-            this.panel2.Controls.Add(this.tbDescripcion);
+            this.panel2.Controls.Add(this.tbOra3);
             this.panel2.Controls.Add(this.lblORA2);
-            this.panel2.Controls.Add(this.cbEsORA);
+            this.panel2.Controls.Add(this.isORA);
             this.panel2.Controls.Add(this.lblORA1);
-            this.panel2.Controls.Add(this.tbTelefono);
+            this.panel2.Controls.Add(this.tbOra2);
             this.panel2.Controls.Add(this.roundButton1);
             this.panel2.Controls.Add(this.tbPass);
-            this.panel2.Controls.Add(this.tbDireccion);
+            this.panel2.Controls.Add(this.tbOra1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.tbEmail);
@@ -409,7 +409,7 @@
             // 
             // RegisterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
             this.ClientSize = new System.Drawing.Size(902, 653);
@@ -443,7 +443,7 @@
         private CustomUserControls.RoundButton roundButton1;
         private CustomUserControls.RoundButton roundButton2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.CheckBox cbEsORA;
+        private System.Windows.Forms.CheckBox isORA;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -453,9 +453,9 @@
         private CustomUserControls.CustomTextBox tbNombreCompleto;
         private CustomUserControls.CustomTextBox tbEmail;
         private CustomUserControls.CustomTextBox tbPass;
-        private CustomUserControls.CustomTextBox tbDireccion;
-        private CustomUserControls.CustomTextBox tbTelefono;
-        private CustomUserControls.CustomTextBox tbDescripcion;
+        private CustomUserControls.CustomTextBox tbOra1;
+        private CustomUserControls.CustomTextBox tbOra2;
+        private CustomUserControls.CustomTextBox tbOra3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnCerrar;

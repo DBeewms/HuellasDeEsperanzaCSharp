@@ -301,6 +301,8 @@ namespace HuellasDeEsperanzaC_.DataSets {
             
             private global::System.Data.DataColumn columnEstaAdoptado;
             
+            private global::System.Data.DataColumn columnAdoptanteId;
+            
             private global::System.Data.DataColumn columnOrganizacionId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -426,6 +428,14 @@ namespace HuellasDeEsperanzaC_.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn AdoptanteIdColumn {
+                get {
+                    return this.columnAdoptanteId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn OrganizacionIdColumn {
                 get {
                     return this.columnOrganizacionId;
@@ -469,7 +479,7 @@ namespace HuellasDeEsperanzaC_.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public MascotasDTRow AddMascotasDTRow(int Id, string Nombre, string Raza, string Sexo, System.DateTime FechaNacimiento, int Edad, string Especie, string Tamaño, string Descripcion, string RutaImagen, bool EstaAdoptado, int OrganizacionId) {
+            public MascotasDTRow AddMascotasDTRow(int Id, string Nombre, string Raza, string Sexo, System.DateTime FechaNacimiento, int Edad, string Especie, string Tamaño, string Descripcion, string RutaImagen, bool EstaAdoptado, int AdoptanteId, string OrganizacionId) {
                 MascotasDTRow rowMascotasDTRow = ((MascotasDTRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -483,6 +493,7 @@ namespace HuellasDeEsperanzaC_.DataSets {
                         Descripcion,
                         RutaImagen,
                         EstaAdoptado,
+                        AdoptanteId,
                         OrganizacionId};
                 rowMascotasDTRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowMascotasDTRow);
@@ -517,6 +528,7 @@ namespace HuellasDeEsperanzaC_.DataSets {
                 this.columnDescripcion = base.Columns["Descripcion"];
                 this.columnRutaImagen = base.Columns["RutaImagen"];
                 this.columnEstaAdoptado = base.Columns["EstaAdoptado"];
+                this.columnAdoptanteId = base.Columns["AdoptanteId"];
                 this.columnOrganizacionId = base.Columns["OrganizacionId"];
             }
             
@@ -545,7 +557,9 @@ namespace HuellasDeEsperanzaC_.DataSets {
                 base.Columns.Add(this.columnRutaImagen);
                 this.columnEstaAdoptado = new global::System.Data.DataColumn("EstaAdoptado", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEstaAdoptado);
-                this.columnOrganizacionId = new global::System.Data.DataColumn("OrganizacionId", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnAdoptanteId = new global::System.Data.DataColumn("AdoptanteId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAdoptanteId);
+                this.columnOrganizacionId = new global::System.Data.DataColumn("OrganizacionId", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnOrganizacionId);
             }
             
@@ -865,10 +879,26 @@ namespace HuellasDeEsperanzaC_.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int OrganizacionId {
+            public int AdoptanteId {
                 get {
                     try {
-                        return ((int)(this[this.tableMascotasDT.OrganizacionIdColumn]));
+                        return ((int)(this[this.tableMascotasDT.AdoptanteIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'AdoptanteId\' de la tabla \'MascotasDT\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMascotasDT.AdoptanteIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string OrganizacionId {
+                get {
+                    try {
+                        return ((string)(this[this.tableMascotasDT.OrganizacionIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'OrganizacionId\' de la tabla \'MascotasDT\' es DBNull.", e);
@@ -1009,6 +1039,18 @@ namespace HuellasDeEsperanzaC_.DataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetEstaAdoptadoNull() {
                 this[this.tableMascotasDT.EstaAdoptadoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsAdoptanteIdNull() {
+                return this.IsNull(this.tableMascotasDT.AdoptanteIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetAdoptanteIdNull() {
+                this[this.tableMascotasDT.AdoptanteIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

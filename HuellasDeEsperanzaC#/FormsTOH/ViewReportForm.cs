@@ -20,7 +20,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     {
         private Usuario usuarioActual;
         private GestorAdopcion gestorAdopcionUser;
-        private GestorUsuario gestorUsuario;
         private GestorMascota gestorMascotaUser;
 
         public ViewReportForm(Usuario usuario, GestorAdopcion gestorAdopcion)
@@ -106,7 +105,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             //reportViewer1.LocalReport.DataSources.Add(rds);
 
             // Obtener la lista de mascotas disponibles para adopción
-            List<Mascota> mascotasDisponibles = gestorAdopcionUser.ObtenerMascotasDisponibles();
+
+            List<Mascota> mascotasDisponibles = gestorMascotaUser.GetListaMascotas();
 
             // Crear una fuente de datos para el ReportViewer
             ReportDataSource rds = new ReportDataSource("DsMascotas", mascotasDisponibles);
@@ -141,9 +141,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void btnConfiguracion_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Close();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
     }
 }

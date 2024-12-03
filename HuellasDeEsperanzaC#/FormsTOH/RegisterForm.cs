@@ -12,44 +12,18 @@ using System.Windows.Forms;
 using HuellasDeEsperanzaC_.FormsTOH;
 using HuellasDeEsperanzaC_.Models;
 using HuellasDeEsperanzaC_.Servicio;
-using MetroFramework;
 
 namespace HuellasDeEsperanzaC_.FormsTOH
 {
     public partial class RegisterForm : Form
     {
-        GestorUsuario gestorUsuario = new GestorUsuario();
-
         public RegisterForm()
         {
             InitializeComponent();
-            ConfigurarFormularioInicial();
             this.ActiveControl = tbNombreCompleto;
-        }
-
-        private void ConfigurarFormularioInicial()
-        {
-            // Inicialmente, ocultamos los campos adicionales para organizaciones
-            MostrarCamposOrganizacion(false);
-            AjustarTamañoFormulario(false);
-        }
-
-        private void MostrarCamposOrganizacion(bool mostrar)
-        {
-            lblORA1.Visible = mostrar;
-            lblORA2.Visible = mostrar;
-            lblORA3.Visible = mostrar;
-            tbDireccion.Visible = mostrar;
-            tbTelefono.Visible = mostrar;
-            tbDescripcion.Visible = mostrar;
-
-            // Ajustar la posición del botón de registro dependiendo de si mostramos los campos adicionales
-            roundButton1.Location = mostrar ? new Point(710, 569) : new Point(710, 332);
-        }
-
-        private void AjustarTamañoFormulario(bool esOrganizacion)
-        {
-            this.Size = esOrganizacion ? new Size(902, 653) : new Size(902, 430);
+            this.Size = new Size(902, 430);
+            roundButton1.Location = new Point(710, 332);
+            
         }
 
         private void RegisterForm_Load(object sender, EventArgs e)
@@ -69,9 +43,28 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            bool esOrganizacion = cbEsORA.Checked;
-            MostrarCamposOrganizacion(esOrganizacion);
-            AjustarTamañoFormulario(esOrganizacion);
+            if (isORA.Checked)
+            {
+                this.Size = new Size(902, 653);
+                lblORA1.Visible = true;
+                lblORA2.Visible = true;
+                lblORA3.Visible = true;
+                tbOra1.Visible = true;
+                tbOra2.Visible = true;
+                tbOra3.Visible = true;
+                roundButton1.Location = new Point(710, 569);
+            }
+            else
+            {
+                this.Size = new Size(902, 430);
+                lblORA1.Visible = false;
+                lblORA2.Visible = false;
+                lblORA3.Visible = false;
+                tbOra1.Visible = false;
+                tbOra2.Visible = false;
+                tbOra3.Visible = false;
+                roundButton1.Location = new Point(710, 332);
+            }
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -86,55 +79,133 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void roundButton1_Click(object sender, EventArgs e)
         {
-            try
+            Usuario usuario = new Usuario();
+            GestorAdopcion gestorAdopcion = new GestorAdopcion();
+            GestorUsuario GestorUsuario = new GestorUsuario();
+
+            string nombreCompleto = tbNombreCompleto.Texts.Trim();
+            string correoElectronico = tbEmail.Texts.Trim();
+            string contraseña = tbPass.Texts;
+
+            usuario.NombreCompleto = nombreCompleto;
+            usuario.CorreoElectronico = correoElectronico;
+
+            // Validar campos obligatorios
+            if (string.IsNullOrEmpty(nombreCompleto) || string.IsNullOrEmpty(correoElectronico) || string.IsNullOrEmpty(contraseña))
             {
-                // Crear el nuevo usuario
-                Usuario nuevoUsuario = new Usuario
-                {
-                    CorreoElectronico = tbEmail.Texts.Trim(),
-                    Tipo = cbEsORA.Checked ? TipoUsuario.Organizacion : TipoUsuario.Comun
-                };
+                MetroFramework.MetroMessageBox.Show(this, "Campos obligatorios no pueden estar vacíos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbNombreCompleto.Focus();
+                return;
+            }
 
-                // Asignar datos comunes o específicos según el tipo
-                if (nuevoUsuario.Tipo == TipoUsuario.Comun)
-                {
-                    nuevoUsuario.NombreCompleto = tbNombreCompleto.Texts.Trim();
-                }
-                else if (nuevoUsuario.Tipo == TipoUsuario.Organizacion)
-                {
-                    nuevoUsuario.NombreOrganizacion = tbNombreCompleto.Texts.Trim();
-                    nuevoUsuario.Direccion = tbDireccion.Texts.Trim();
-                    nuevoUsuario.NumeroTelefono = tbTelefono.Texts.Trim();
-                    nuevoUsuario.Descripcion = tbDescripcion.Texts.Trim();
-                }
+            // Validar nombre completo
+            if (string.IsNullOrEmpty(nombreCompleto) || nombreCompleto.Length < 10)
+            {
+                MetroFramework.MetroMessageBox.Show(this, "El nombre completo no puede estar vacío y debe tener al menos 10 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbNombreCompleto.Focus();
+                return;
+            }
 
-                // Establecer la contraseña encriptada
-                nuevoUsuario.EstablecerContraseña(tbPass.Texts.Trim());
+            // Validar correo electrónico
+            if (string.IsNullOrEmpty(correoElectronico) || !EsCorreoValido(correoElectronico))
+            {
+                MetroFramework.MetroMessageBox.Show(this, "Ingrese un correo electrónico válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbEmail.Focus();
+                return;
+            }
 
-                // Validar y registrar el usuario
-                if (!gestorUsuario.ValidarRegistroUsuario(nuevoUsuario))
+            // Validar contraseña
+            if (string.IsNullOrEmpty(contraseña))
+            {
+                MetroFramework.MetroMessageBox.Show(this, "La contraseña no puede estar vacía", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbPass.Focus();
+                return;
+            }
+            else if (contraseña.Length < 11)
+            {
+                MetroFramework.MetroMessageBox.Show(this, "La contraseña debe tener al menos 11 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbPass.Focus();
+                return;
+            }
+            else
+            {
+                usuario.EstablecerContraseña(contraseña);
+            }
+
+            if (isORA.Checked)
+            {
+                usuario.Direccion = tbOra1.Texts.Trim();
+                usuario.NumeroTelefono = tbOra2.Texts.Trim();
+                usuario.Descripcion = tbOra3.Texts.Trim();
+                usuario.Tipo = TipoUsuario.Organizacion;
+
+                // Validar campos adicionales para organizaciones
+                if (string.IsNullOrEmpty(usuario.Direccion) || string.IsNullOrEmpty(usuario.NumeroTelefono) || string.IsNullOrEmpty(usuario.Descripcion))
                 {
-                    MetroFramework.MetroMessageBox.Show(this, "Por favor complete todos los campos correctamente.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MetroFramework.MetroMessageBox.Show(this, "Por favor llene todos los campos para la organización", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbOra1.Focus();
                     return;
                 }
-
-                gestorUsuario.RegistrarUsuario(nuevoUsuario, this, new GestorAdopcion());
-
-                // Redirigir al formulario principal
-                HomeGeneralForm homeForm = new HomeGeneralForm(nuevoUsuario, new GestorAdopcion());
-                homeForm.Show();
-                this.Hide();
+                else if (string.IsNullOrEmpty(usuario.Direccion) || usuario.Direccion.Length < 15)
+                {
+                    MetroFramework.MetroMessageBox.Show(this, "La dirección debe tener al menos 15 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbOra1.Focus();
+                    return;
+                }
+                else if (string.IsNullOrEmpty(usuario.NumeroTelefono) || !EsTelefonoValido(usuario.NumeroTelefono))
+                {
+                    MetroFramework.MetroMessageBox.Show(this, "El número de teléfono debe tener el formato ####-####", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbOra2.Focus();
+                    return;
+                }
+                else if (string.IsNullOrEmpty(usuario.Descripcion) || usuario.Descripcion.Length < 30)
+                {
+                    MetroFramework.MetroMessageBox.Show(this, "La descripción debe tener al menos 30 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tbOra3.Focus();
+                    return;
+                }
             }
-            catch (ArgumentException ex)
+            else
             {
-                MetroFramework.MetroMessageBox.Show(this, ex.Message, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                usuario.Tipo = TipoUsuario.Comun;
             }
-            catch (Exception ex)
+
+            // Verificar si el correo ya está registrado
+            GestorUsuario.CargarDatosUsuarios(); // Asegura que los datos estén cargados
+            Usuario usuarioExistente = GestorUsuario.BuscarUsuarioPorCorreo(correoElectronico);
+            if (usuarioExistente != null)
             {
-                MetroFramework.MetroMessageBox.Show(this, $"Ocurrió un error al registrar el usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroFramework.MetroMessageBox.Show(this, "El correo electrónico ya está registrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbEmail.Focus();
+                return;
+            }
+
+            // Registrar usuario
+            GestorUsuario.RegistrarUsuario(usuario, this, gestorAdopcion);
+
+            // Redirigir al formulario Home
+            HomeGeneralForm home = new HomeGeneralForm(usuario, gestorAdopcion);
+            home.Show();
+            this.Hide();
+        }
+
+        private bool EsCorreoValido(string correo)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(correo);
+                return addr.Address == correo;
+            }
+            catch
+            {
+                return false;
             }
         }
 
+        private bool EsTelefonoValido(string telefono)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(telefono, @"^\d{4}-\d{4}$");
+        }
 
         private void roundButton2_Click(object sender, EventArgs e)
         {
@@ -161,14 +232,14 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void isORA_Click(object sender, EventArgs e)
         {
-            tbDireccion.Focus();
+            tbOra1.Focus();
         }
 
         private void tbOra2_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                tbDescripcion.Focus();
+                tbOra3.Focus();
             }
         }
 
@@ -192,7 +263,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                tbTelefono.Focus();
+                tbOra2.Focus();
             }
         }
 

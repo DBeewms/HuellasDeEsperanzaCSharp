@@ -15,14 +15,14 @@ namespace HuellasDeEsperanzaC_.CustomUserControls
         private int borderSize = 0;
         private Color borderColor = Color.White;
         private GestorAdopcion gestorAdopcion;
-        private int solicitudId;
+        private SolicitudAdopcion solicitudActual;
 
         public int SolicitudId
         {
-            get { return solicitudId; }
+            get { return solicitudActual?.Id ?? 0; }
             set
             {
-                solicitudId = value;
+                solicitudActual = gestorAdopcion.ObtenerSolicitudPorId(value);
                 CargarDatosSolicitud();
             }
         }
@@ -40,47 +40,34 @@ namespace HuellasDeEsperanzaC_.CustomUserControls
         {
             InitializeComponent();
             ConfigurarControl();
-
-            this.solicitudId = solicitudId;
-            this.gestorAdopcion = new GestorAdopcion();
-
-            CargarDatosSolicitud();
-        }
-
-        private void ConfigurarControl()
-        {
-            this.AutoSize = false;
-            this.AutoScaleMode = AutoScaleMode.None;
-            this.Size = new Size(270, 350);
-            this.MinimumSize = new Size(270, 350);
-            this.MaximumSize = new Size(270, 350);
-
-            this.panel1.AutoSize = false;
-            this.panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            this.panel1.BackColor = Color.White;
+            gestorAdopcion = new GestorAdopcion();
+            SolicitudId = solicitudId;
         }
 
         private void CargarDatosSolicitud()
         {
-            SolicitudAdopcion solicitud = gestorAdopcion.ObtenerPrimeraSolicitudEnEsperaPorUsuario(solicitudId);
-            if (solicitud != null)
+            if (solicitudActual != null)
             {
-                Mascota mascota = gestorAdopcion.ObtenerMascotaPorId(solicitud.MascotaId);
+                Mascota mascota = gestorAdopcion.ObtenerMascotaPorId(solicitudActual.MascotaId);
                 if (mascota != null)
                 {
-                    NombreMascota = mascota.Nombre;
-                    RazaMascota = mascota.Raza;
-                    SexoMascota = mascota.Sexo;
+                    lblNombreMascota.Text = mascota.Nombre;
+                    lblRaza.Text = mascota.Raza;
+                    lblSexo.Text = mascota.Sexo.ToString();
                     ImagenMascota = CargarImagenMascota(mascota.RutaImagen);
                 }
 
-                Usuario usuario = gestorAdopcion.ObtenerUsuarioPorId(solicitud.UsuarioId);
+                Usuario usuario = gestorAdopcion.ObtenerUsuarioPorId(solicitudActual.UsuarioId);
                 if (usuario != null)
                 {
-                    NombreSolicitante = usuario.NombreCompleto;
-                    EmailSolicitante = usuario.CorreoElectronico;
-                    TelefonoSolicitante = usuario.NumeroTelefono;
+                    lblNombreSolicitante.Text = usuario.NombreCompleto;
+                    lblEmailSolicitante.Text = usuario.CorreoElectronico;
+                    lblTelefonoSolicitante.Text = usuario.NumeroTelefono;
                 }
+            }
+            else
+            {
+                MessageBox.Show("No se encontró la solicitud de adopción.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -103,6 +90,19 @@ namespace HuellasDeEsperanzaC_.CustomUserControls
                 string rutaImagenPredeterminada = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\icons8-pets-50.png");
                 return Image.FromFile(rutaImagenPredeterminada);
             }
+        }
+
+        private void ConfigurarControl()
+        {
+            this.AutoSize = false;
+            this.AutoScaleMode = AutoScaleMode.None;
+            this.Size = new Size(270, 350);
+            this.MinimumSize = new Size(270, 350);
+            this.MaximumSize = new Size(270, 350);
+
+            this.panel1.AutoSize = false;
+            this.panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            this.panel1.BackColor = Color.White;
         }
 
         public int BorderRadius

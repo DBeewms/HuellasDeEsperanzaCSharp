@@ -20,6 +20,7 @@ namespace HuellasDeEsperanzaC_.Models
         public string Descripcion { get; set; }
         public string RutaImagen { get; set; }
         public bool EstaAdoptado { get; set; }
+        public int AdoptanteId { get; set; }
         public int OrganizacionId { get; set; }
 
         public Mascota()
@@ -34,6 +35,7 @@ namespace HuellasDeEsperanzaC_.Models
             Descripcion = string.Empty;
             RutaImagen = string.Empty;
             EstaAdoptado = false;
+            AdoptanteId = 0;
             OrganizacionId = 0;
         }
 

@@ -27,35 +27,38 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfiguracionForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnRegresar = new HuellasDeEsperanzaC_.CustomUserControls.RoundButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbEmail = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnGuardar = new HuellasDeEsperanzaC_.CustomUserControls.RoundButton();
             this.lblDireccion = new System.Windows.Forms.Label();
-            this.tbNombreCompleto = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.lblNumeroTelefono = new System.Windows.Forms.Label();
-            this.tbDireccion = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.lblNumeroCedula = new System.Windows.Forms.Label();
+            this.lblOcupacion = new System.Windows.Forms.Label();
+            this.lblNombreCompleto = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnCerrar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbEmail = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
+            this.btnGuardar = new HuellasDeEsperanzaC_.CustomUserControls.RoundButton();
+            this.tbNombreCompleto = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
+            this.tbDireccion = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.tbNumeroTelefono = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.tbNumeroCedula = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
             this.tbOcupacion = new HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox();
-            this.lblOcupacion = new System.Windows.Forms.Label();
-            this.lblNombreCompleto = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(240)))), ((int)(((byte)(197)))));
-            this.panel1.Controls.Add(this.btnRegresar);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -65,22 +68,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.panel1.Size = new System.Drawing.Size(320, 653);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // btnRegresar
-            // 
-            this.btnRegresar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(125)))), ((int)(((byte)(106)))));
-            this.btnRegresar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegresar.FlatAppearance.BorderSize = 0;
-            this.btnRegresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegresar.ForeColor = System.Drawing.Color.White;
-            this.btnRegresar.Location = new System.Drawing.Point(79, 281);
-            this.btnRegresar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnRegresar.Name = "btnRegresar";
-            this.btnRegresar.Size = new System.Drawing.Size(153, 60);
-            this.btnRegresar.TabIndex = 7;
-            this.btnRegresar.Text = "Regresar";
-            this.btnRegresar.UseVisualStyleBackColor = false;
-            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
             // pictureBox1
             // 
@@ -94,20 +81,9 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(10, 214);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(301, 30);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Regresar a la Página Principal";
-            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.tbEmail);
             this.panel2.Controls.Add(this.label2);
@@ -143,6 +119,110 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.label3.TabIndex = 14;
             this.label3.Text = "Correo Electrónico:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(361, 29);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(176, 37);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Editar Perfil";
+            // 
+            // lblDireccion
+            // 
+            this.lblDireccion.AutoSize = true;
+            this.lblDireccion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDireccion.Location = new System.Drawing.Point(368, 437);
+            this.lblDireccion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDireccion.Name = "lblDireccion";
+            this.lblDireccion.Size = new System.Drawing.Size(82, 18);
+            this.lblDireccion.TabIndex = 9;
+            this.lblDireccion.Text = "Dirección:";
+            this.lblDireccion.Click += new System.EventHandler(this.lblDireccion_Click);
+            // 
+            // lblNumeroTelefono
+            // 
+            this.lblNumeroTelefono.AutoSize = true;
+            this.lblNumeroTelefono.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroTelefono.Location = new System.Drawing.Point(368, 315);
+            this.lblNumeroTelefono.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNumeroTelefono.Name = "lblNumeroTelefono";
+            this.lblNumeroTelefono.Size = new System.Drawing.Size(77, 18);
+            this.lblNumeroTelefono.TabIndex = 10;
+            this.lblNumeroTelefono.Text = "Teléfono:";
+            this.lblNumeroTelefono.Click += new System.EventHandler(this.lblNumeroTelefono_Click);
+            // 
+            // lblNumeroCedula
+            // 
+            this.lblNumeroCedula.AutoSize = true;
+            this.lblNumeroCedula.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroCedula.Location = new System.Drawing.Point(368, 250);
+            this.lblNumeroCedula.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNumeroCedula.Name = "lblNumeroCedula";
+            this.lblNumeroCedula.Size = new System.Drawing.Size(65, 18);
+            this.lblNumeroCedula.TabIndex = 11;
+            this.lblNumeroCedula.Text = "Cédula:";
+            this.lblNumeroCedula.Click += new System.EventHandler(this.lblNumeroCedula_Click);
+            // 
+            // lblOcupacion
+            // 
+            this.lblOcupacion.AutoSize = true;
+            this.lblOcupacion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOcupacion.Location = new System.Drawing.Point(368, 502);
+            this.lblOcupacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblOcupacion.Name = "lblOcupacion";
+            this.lblOcupacion.Size = new System.Drawing.Size(92, 18);
+            this.lblOcupacion.TabIndex = 12;
+            this.lblOcupacion.Text = "Ocupación:";
+            this.lblOcupacion.Click += new System.EventHandler(this.lblOcupacion_Click);
+            // 
+            // lblNombreCompleto
+            // 
+            this.lblNombreCompleto.AutoSize = true;
+            this.lblNombreCompleto.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreCompleto.Location = new System.Drawing.Point(368, 120);
+            this.lblNombreCompleto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNombreCompleto.Name = "lblNombreCompleto";
+            this.lblNombreCompleto.Size = new System.Drawing.Size(153, 18);
+            this.lblNombreCompleto.TabIndex = 8;
+            this.lblNombreCompleto.Text = "Nombre Completo:";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnCerrar);
+            this.panel3.Location = new System.Drawing.Point(785, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(114, 41);
+            this.panel3.TabIndex = 18;
+            // 
+            // btnCerrar
+            // 
+            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrar.FlatAppearance.BorderSize = 0;
+            this.btnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrar.Image = global::HuellasDeEsperanzaC_.Properties.Resources.icons8_eliminar_32;
+            this.btnCerrar.Location = new System.Drawing.Point(66, 0);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(49, 41);
+            this.btnCerrar.TabIndex = 7;
+            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(52, 213);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(206, 30);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "¡Completa tu Perfil!";
+            // 
             // tbEmail
             // 
             this.tbEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
@@ -164,18 +244,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.tbEmail.Texts = "";
             this.tbEmail.UnderlinedStyle = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(361, 29);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(176, 37);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Editar Perfil";
-            // 
             // btnGuardar
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(94)))), ((int)(((byte)(78)))));
@@ -191,18 +259,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
-            // 
-            // lblDireccion
-            // 
-            this.lblDireccion.AutoSize = true;
-            this.lblDireccion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(368, 437);
-            this.lblDireccion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(82, 18);
-            this.lblDireccion.TabIndex = 9;
-            this.lblDireccion.Text = "Dirección:";
-            this.lblDireccion.Click += new System.EventHandler(this.lblDireccion_Click);
             // 
             // tbNombreCompleto
             // 
@@ -225,18 +281,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.tbNombreCompleto.Texts = "";
             this.tbNombreCompleto.UnderlinedStyle = true;
             // 
-            // lblNumeroTelefono
-            // 
-            this.lblNumeroTelefono.AutoSize = true;
-            this.lblNumeroTelefono.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroTelefono.Location = new System.Drawing.Point(368, 315);
-            this.lblNumeroTelefono.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblNumeroTelefono.Name = "lblNumeroTelefono";
-            this.lblNumeroTelefono.Size = new System.Drawing.Size(77, 18);
-            this.lblNumeroTelefono.TabIndex = 10;
-            this.lblNumeroTelefono.Text = "Teléfono:";
-            this.lblNumeroTelefono.Click += new System.EventHandler(this.lblNumeroTelefono_Click);
-            // 
             // tbDireccion
             // 
             this.tbDireccion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(210)))), ((int)(((byte)(178)))));
@@ -257,18 +301,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.tbDireccion.TabIndex = 2;
             this.tbDireccion.Texts = "";
             this.tbDireccion.UnderlinedStyle = true;
-            // 
-            // lblNumeroCedula
-            // 
-            this.lblNumeroCedula.AutoSize = true;
-            this.lblNumeroCedula.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroCedula.Location = new System.Drawing.Point(368, 250);
-            this.lblNumeroCedula.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblNumeroCedula.Name = "lblNumeroCedula";
-            this.lblNumeroCedula.Size = new System.Drawing.Size(65, 18);
-            this.lblNumeroCedula.TabIndex = 11;
-            this.lblNumeroCedula.Text = "Cédula:";
-            this.lblNumeroCedula.Click += new System.EventHandler(this.lblNumeroCedula_Click);
             // 
             // tbNumeroTelefono
             // 
@@ -333,29 +365,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             this.tbOcupacion.Texts = "";
             this.tbOcupacion.UnderlinedStyle = true;
             // 
-            // lblOcupacion
-            // 
-            this.lblOcupacion.AutoSize = true;
-            this.lblOcupacion.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOcupacion.Location = new System.Drawing.Point(368, 502);
-            this.lblOcupacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblOcupacion.Name = "lblOcupacion";
-            this.lblOcupacion.Size = new System.Drawing.Size(92, 18);
-            this.lblOcupacion.TabIndex = 12;
-            this.lblOcupacion.Text = "Ocupación:";
-            this.lblOcupacion.Click += new System.EventHandler(this.lblOcupacion_Click);
-            // 
-            // lblNombreCompleto
-            // 
-            this.lblNombreCompleto.AutoSize = true;
-            this.lblNombreCompleto.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreCompleto.Location = new System.Drawing.Point(368, 120);
-            this.lblNombreCompleto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblNombreCompleto.Name = "lblNombreCompleto";
-            this.lblNombreCompleto.Size = new System.Drawing.Size(153, 18);
-            this.lblNombreCompleto.TabIndex = 8;
-            this.lblNombreCompleto.Text = "Nombre Completo:";
-            // 
             // ConfiguracionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -376,6 +385,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -386,7 +396,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label2;
         private HuellasDeEsperanzaC_.CustomUserControls.CustomTextBox tbNombreCompleto;
@@ -400,8 +409,11 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         private System.Windows.Forms.Label lblNumeroTelefono;
         private System.Windows.Forms.Label lblNumeroCedula;
         private System.Windows.Forms.Label lblOcupacion;
-        private CustomUserControls.RoundButton btnRegresar;
         private CustomUserControls.CustomTextBox tbEmail;
         private Label label3;
+        private Panel panel3;
+        private Button btnCerrar;
+        private Label label1;
+        private ToolTip toolTip1;
     }
 }

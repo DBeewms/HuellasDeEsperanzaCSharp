@@ -92,16 +92,18 @@ namespace HuellasDeEsperanzaC_.Servicio
             using (FileStream mArchivoEscritor = new FileStream("mascotas.dat", FileMode.Create, FileAccess.Write))
             using (BinaryWriter Escritor = new BinaryWriter(mArchivoEscritor))
             {
-                for (int i = 0; i < mascotas.Count; i++)
+                foreach (var mascota in mascotas)
                 {
-                    Escritor.Write(mascotas[i].Id);
-                    Escritor.Write(mascotas[i].Nombre);
-                    Escritor.Write(mascotas[i].Especie);
-                    Escritor.Write(mascotas[i].Sexo);
-                    Escritor.Write(mascotas[i].Raza);
-                    Escritor.Write(mascotas[i].FechaNacimiento.ToBinary());
-                    Escritor.Write(mascotas[i].Descripcion);
-                    Escritor.Write(mascotas[i].RutaImagen ?? string.Empty);
+                    Escritor.Write(mascota.Id);
+                    Escritor.Write(mascota.Nombre);
+                    Escritor.Write(mascota.Especie);
+                    Escritor.Write(mascota.Sexo);
+                    Escritor.Write(mascota.Raza);
+                    Escritor.Write(mascota.FechaNacimiento.ToBinary());
+                    Escritor.Write(mascota.Descripcion);
+                    Escritor.Write(mascota.RutaImagen ?? string.Empty);
+                    Escritor.Write(mascota.EstaAdoptado);
+                    Escritor.Write(mascota.AdoptanteId);
                 }
             }
         }
@@ -129,7 +131,9 @@ namespace HuellasDeEsperanzaC_.Servicio
                         Raza = Lector.ReadString(),
                         FechaNacimiento = DateTime.FromBinary(Lector.ReadInt64()),
                         Descripcion = Lector.ReadString(),
-                        RutaImagen = Lector.ReadString()
+                        RutaImagen = Lector.ReadString(),
+                        EstaAdoptado = Lector.ReadBoolean(),
+                        AdoptanteId = Lector.ReadInt32()
                     };
 
                     string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
@@ -149,6 +153,18 @@ namespace HuellasDeEsperanzaC_.Servicio
         public void ActualizarMascota(Mascota mascota, Form formulario)
         {
             RegistrarMascota(mascota, formulario, true);
+        }
+
+        public void ActualizarEstadoMascota(Mascota mascota)
+        {
+            // Buscar la mascota en la lista y actualizar su estado
+            var mascotaExistente = mascotas.FirstOrDefault(m => m.Id == mascota.Id);
+            if (mascotaExistente != null)
+            {
+                int index = mascotas.IndexOf(mascotaExistente);
+                mascotas[index] = mascota;
+                EscribirArchivoMascotas();
+            }
         }
 
         public string SeleccionarYGuardarImagen(Form formulario)
@@ -181,6 +197,12 @@ namespace HuellasDeEsperanzaC_.Servicio
             }
 
             return string.Empty;
+        }
+
+        public void SetListaMascotas(List<Mascota> nuevasMascotas)
+        {
+            mascotas = nuevasMascotas;
+            EscribirArchivoMascotas();
         }
 
         public List<Mascota> GetListaMascotas()

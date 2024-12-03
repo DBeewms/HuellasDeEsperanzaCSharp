@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,15 +16,12 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     public partial class ConfiguracionForm : Form
     {
         private Usuario usuarioActual;
-        private GestorUsuario gestorUsuario;
-        private GestorAdopcion gestorAdopcionUser;
+        private GestorAdopcion gestorAdopcionUser;  
 
-
-        public ConfiguracionForm(Usuario usuario, GestorUsuario gestorUsuario, GestorAdopcion gestorAdopcion)
+        public ConfiguracionForm(Usuario usuario, GestorAdopcion gestorAdopcion)
         {
             InitializeComponent();
             this.usuarioActual = usuario;
-            this.gestorUsuario = gestorUsuario;
             this.gestorAdopcionUser = gestorAdopcion;
             MostrarDatosUsuario();
         }
@@ -49,20 +45,52 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             string numeroCedula = tbNumeroCedula.Texts.Trim();
             string ocupacion = tbOcupacion.Texts.Trim();
 
-            if (string.IsNullOrEmpty(nombreCompleto) &&
-                string.IsNullOrEmpty(correo) &&
-                string.IsNullOrEmpty(direccion) &&
-                string.IsNullOrEmpty(numeroTelefono) &&
-                string.IsNullOrEmpty(numeroCedula) &&
-                string.IsNullOrEmpty(ocupacion))
+            // Validar campos obligatorios
+            if (string.IsNullOrEmpty(nombreCompleto) || nombreCompleto.Length < 10)
             {
-                MetroFramework.MetroMessageBox.Show(this, "No hay cambios para guardar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MetroFramework.MetroMessageBox.Show(this, "El nombre completo no puede estar vacío y debe tener al menos 10 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbNombreCompleto.Focus();
                 return;
             }
 
-            if (!ValidarUsuario(correo, numeroTelefono))
+            // Validar correo electrónico
+            if (string.IsNullOrEmpty(correo) || !EsCorreoValido(correo))
             {
-                MetroFramework.MetroMessageBox.Show(this, "Los datos ingresados no son válidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetroFramework.MetroMessageBox.Show(this, "Ingrese un correo electrónico válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbEmail.Focus();
+                return;
+            }
+
+            // Verificar si el correo ya está tomado, excepto si es el mismo que el del usuario actual
+            GestorUsuario gestorUsuario = new GestorUsuario();
+            if (correo != usuarioActual.CorreoElectronico && gestorUsuario.CorreoElectronicoExiste(correo))
+            {
+                MetroFramework.MetroMessageBox.Show(this, "El correo electrónico ya está en uso", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbEmail.Focus();
+                return;
+            }
+
+            // Validar dirección
+            if (string.IsNullOrEmpty(direccion) || direccion.Length < 15)
+            {
+                MetroFramework.MetroMessageBox.Show(this, "La dirección debe tener al menos 15 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbDireccion.Focus();
+                return;
+            }
+
+            // Validar número de teléfono
+            if (string.IsNullOrEmpty(numeroTelefono) || !EsTelefonoValido(numeroTelefono))
+            {
+                MetroFramework.MetroMessageBox.Show(this, "El número de teléfono debe tener el formato ####-####", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbNumeroTelefono.Focus();
+                return;
+            }
+
+            // Validar ocupación
+            if (string.IsNullOrEmpty(ocupacion) || ocupacion.Length < 10)
+            {
+                MetroFramework.MetroMessageBox.Show(this, "La ocupación debe tener al menos 10 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbOcupacion.Focus();
                 return;
             }
 
@@ -74,11 +102,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
                 numeroCedula != usuarioActual.NumeroCedula ||
                 ocupacion != usuarioActual.Ocupacion)
             {
-                usuarioActual.NombreCompleto = nombreCompleto;
-                usuarioActual.Direccion = direccion;
-                usuarioActual.NumeroTelefono = numeroTelefono;
-                usuarioActual.NumeroCedula = numeroCedula;
-                usuarioActual.Ocupacion = ocupacion;
+                usuarioActual.CompletarPerfilUsuario(nombreCompleto, direccion, numeroTelefono, numeroCedula, ocupacion);
                 hayCambios = true;
             }
 
@@ -94,87 +118,28 @@ namespace HuellasDeEsperanzaC_.FormsTOH
                 return;
             }
 
-            try
-            {
-                gestorUsuario.ActualizarUsuarioExistente(usuarioActual);
-                gestorUsuario.GuardarArchivoUsuario();
-                MetroFramework.MetroMessageBox.Show(this, "Perfil actualizado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MetroFramework.MetroMessageBox.Show(this, $"Ocurrió un error al actualizar el perfil: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            gestorUsuario.ActualizarUsuario(usuarioActual, this, gestorAdopcionUser);
 
             this.Close();
         }
 
-        private bool ValidarUsuario(string correo, string numeroTelefono)
+        private bool EsCorreoValido(string correo)
         {
-            // Validar formato de correo electrónico
-            if (!Regex.IsMatch(correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(correo);
+                return addr.Address == correo;
+            }
+            catch
             {
                 return false;
             }
-
-            // Validar formato de número de teléfono
-            if (!string.IsNullOrWhiteSpace(numeroTelefono) &&
-                !Regex.IsMatch(numeroTelefono, @"^\d{4}-\d{4}$"))
-            {
-                return false;
-            }
-
-            return true;
         }
 
-        // private bool ValidarUsuario(Usuario usuario)
-        // {
-        //     // Validar campos comunes a todos los usuarios
-        //     if (string.IsNullOrWhiteSpace(usuario.CorreoElectronico) ||
-        //         string.IsNullOrWhiteSpace(usuario.HashContrasena))
-        //     {
-        //         return false;
-        //     }
-
-        //     // Validar formato de correo electrónico
-        //     if (!Regex.IsMatch(usuario.CorreoElectronico, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-        //     {
-        //         return false;
-        //     }
-
-        //     // Validar longitud de la contraseña
-        //     if (usuario.HashContrasena.Length > 11)
-        //     {
-        //         return false;
-        //     }
-
-        //     // Validar formato de número de teléfono
-        //     if (!string.IsNullOrWhiteSpace(usuario.NumeroTelefono) &&
-        //         !Regex.IsMatch(usuario.NumeroTelefono, @"^\d{4}-\d{4}$"))
-        //     {
-        //         return false;
-        //     }
-
-        //     // Validar campos específicos según el tipo de usuario
-        //     if (usuario.Tipo == TipoUsuario.Comun)
-        //     {
-        //         if (string.IsNullOrWhiteSpace(usuario.NombreCompleto))
-        //         {
-        //             return false;
-        //         }
-        //     }
-        //     else if (usuario.Tipo == TipoUsuario.Organizacion)
-        //     {
-        //         if (string.IsNullOrWhiteSpace(usuario.NombreOrganizacion) ||
-        //             string.IsNullOrWhiteSpace(usuario.Direccion) ||
-        //             string.IsNullOrWhiteSpace(usuario.NumeroTelefono) ||
-        //             string.IsNullOrWhiteSpace(usuario.Descripcion))
-        //         {
-        //             return false;
-        //         }
-        //     }
-
-        //     return true;
-        // }
+        private bool EsTelefonoValido(string telefono)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(telefono, @"^\d{4}-\d{4}$");
+        }
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
@@ -231,17 +196,9 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         }
 
-        private bool IsValidEmail(string email)
+        private void btnCerrar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
+            this.Close();
         }
     }
 }

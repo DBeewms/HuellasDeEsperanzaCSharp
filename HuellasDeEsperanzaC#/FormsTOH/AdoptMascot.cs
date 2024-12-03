@@ -19,7 +19,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
     {
         private Usuario usuarioActual;
         private GestorAdopcion gestorAdopcionUser;
-        private GestorUsuario gestorUsuario;
 
         public AdoptMascot(Usuario usuario, GestorAdopcion gestorAdopcion)
         {
@@ -31,7 +30,7 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         private void AdoptMascot_Load(object sender, EventArgs e)
         {
             CargarYAgregarMascotas();
-            gestorAdopcionUser.RecargarDatosSolicitudes();
+            gestorAdopcionUser.CargarDatosSolicitudes();
         }
 
         public void CargarYAgregarMascotas()
@@ -83,16 +82,45 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             flowLayoutPanel1.Controls.Add(card);
         }
 
+        private void VerificarPerfilCompleto()
+        {
+            if (!usuarioActual.PerfilCompleto)
+            {
+                MessageBox.Show("Por favor, complete su perfil antes de continuar.", "Perfil Incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+                configuracionForm.ShowDialog();
+            }
+        }
+
         private void Card_OnSelect(object sender, EventArgs e)
         {
+            // Verificar si el perfil está completo
+            VerificarPerfilCompleto();
+            
             Card selectedCard = sender as Card;
 
             if (selectedCard != null)
             {
                 // Recargar las solicitudes desde el gestor
-                gestorAdopcionUser.RecargarDatosSolicitudes();
+                gestorAdopcionUser.CargarDatosSolicitudes();
 
+                // Verificar si el usuario tiene solicitudes pendientes
+                if (gestorAdopcionUser.UsuarioPendienteAdopcion(usuarioActual.Id))
+                {
+                    MetroFramework.MetroMessageBox.Show(this,
+                        "Ya tienes una solicitud de adopción pendiente. No puedes solicitar otra mascota hasta que se procese.",
+                        "Solicitud no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // Salir si ya hay una solicitud pendiente
+                }
+
+                // Crear la solicitud de adopción
                 gestorAdopcionUser.CrearSolicitudAdopcion(usuarioActual.Id, selectedCard.MascotaId, this);
+
+                // Mensaje de éxito
+                MetroFramework.MetroMessageBox.Show(this,
+                    "¡Solicitud de adopción enviada con éxito!",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
 
@@ -175,9 +203,8 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void button7_Click(object sender, EventArgs e)
         {
-            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorUsuario, gestorAdopcionUser);
-            configuracionForm.Show();
-            this.Hide();
+            ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
+            configuracionForm.ShowDialog();
         }
 
         private void card1_Load(object sender, EventArgs e)

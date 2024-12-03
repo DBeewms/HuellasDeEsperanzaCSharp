@@ -12,12 +12,12 @@ using System.Windows.Forms;
 using HuellasDeEsperanzaC_.FormsTOH;
 using HuellasDeEsperanzaC_.Models;
 using HuellasDeEsperanzaC_.Servicio;
-using MetroFramework;
 
 namespace HuellasDeEsperanzaC_.FormsTOH
 {
     public partial class LoginForm : Form
     {
+        List<Usuario> usuarios = new List<Usuario>();
         GestorAdopcion gestorAdopcion = new GestorAdopcion();
         GestorUsuario gestorUsuario = new GestorUsuario();
 
@@ -41,43 +41,28 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void roundButton1_Click(object sender, EventArgs e)
         {
-            string correo = tbCorreo.Texts.Trim();
-            string contrasena = tbContrasena.Texts.Trim();
+            string correo = tbCorreo.Texts;
+            string contrasena = tbContrasena.Texts;
 
-            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
+            GestorUsuario gestorUsuario = new GestorUsuario();
+            gestorUsuario.CargarDatosUsuarios();
+
+            Usuario usuario = gestorUsuario.BuscarUsuarioPorCorreo(correo);
+
+            if (usuario != null && usuario.VerificarContraseña(contrasena))
             {
-                MetroFramework.MetroMessageBox.Show(this, "Por favor, ingrese su correo electrónico y contraseña.", "Campos Vacíos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                GestorAdopcion gestorAdopcion = new GestorAdopcion(); 
+                HomeAdminForm homeAdminForm = new HomeAdminForm(usuario, gestorAdopcion);
+                homeAdminForm.Show();
+                //HomeGeneralForm homeForm = new HomeGeneralForm(usuario, gestorAdopcion);
+                //homeForm.Show();
+                this.Hide();
+            }
+            else
+            {
+                MetroFramework.MetroMessageBox.Show(this, "Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            try
-            {
-                // Validar credenciales usando el GestorUsuario
-                var usuario = gestorUsuario.VerificarCredenciales(correo, contrasena);
-
-                if (usuario != null)
-                {
-                    // Redirigir al formulario correspondiente según el tipo de usuario
-                    Form homeForm = usuario.Tipo == TipoUsuario.Administrador
-                        ? (Form)new HomeAdminForm(usuario, new GestorAdopcion())
-                        : new HomeGeneralForm(usuario, new GestorAdopcion());
-
-                    homeForm.Show();
-                    this.Hide();
-                }
-                else
-                {
-                    MetroFramework.MetroMessageBox.Show(this, "Correo o contraseña incorrectos. Inténtelo nuevamente.", "Error de Autenticación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                MetroFramework.MetroMessageBox.Show(this, ex.Message, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (Exception ex)
-            {
-                MetroFramework.MetroMessageBox.Show(this, $"Error durante la autenticación: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void tbCorreo_KeyPress(object sender, KeyPressEventArgs e)
