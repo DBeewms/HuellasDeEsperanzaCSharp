@@ -36,8 +36,11 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
         private void CargarMascotaEnEspera()
         {
-            // Obtener la primera solicitud en espera del usuario actual
-            SolicitudAdopcion solicitudEnEspera = gestorAdopcionUser.ObtenerSolicitudPorId(usuarioActual.Id);
+            // Asegurar que los datos estén cargados
+            gestorAdopcionUser.CargarDatosSolicitudes();
+            
+            // Obtener la solicitud pendiente del usuario actual
+            SolicitudAdopcion solicitudEnEspera = gestorAdopcionUser.ObtenerSolicitudPorUsuarioId(usuarioActual.Id);
 
             if (solicitudEnEspera != null)
             {
@@ -90,9 +93,6 @@ namespace HuellasDeEsperanzaC_.FormsTOH
                 pbCircleMascota.Image = null;
             }
         }
-
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -165,6 +165,11 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
             this.Close();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

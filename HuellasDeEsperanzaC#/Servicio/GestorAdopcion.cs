@@ -34,6 +34,11 @@ namespace HuellasDeEsperanzaC_.Servicio
             return solicitudes.FirstOrDefault(s => s.Id == solicitudId);
         }
 
+        public SolicitudAdopcion ObtenerSolicitudPorUsuarioId(int usuarioId)
+        {
+            return solicitudes.FirstOrDefault(s => s.UsuarioId == usuarioId && s.Estado == EstadoSolicitud.Pendiente);
+        }
+
         // Crear una nueva solicitud de adopción
         public void CrearSolicitudAdopcion(int usuarioId, int mascotaId, Form formulario)
         {

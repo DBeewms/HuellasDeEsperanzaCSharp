@@ -144,5 +144,12 @@ namespace HuellasDeEsperanzaC_.FormsTOH
             ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
             configuracionForm.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            GeneralWaitingListForm generalWaitingListForm = new GeneralWaitingListForm(usuarioActual, gestorAdopcionUser);
+            generalWaitingListForm.Show();
+            this.Close();
+        }
     }
 }

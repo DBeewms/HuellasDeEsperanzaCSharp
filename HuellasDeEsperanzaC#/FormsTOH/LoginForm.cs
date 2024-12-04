@@ -51,18 +51,23 @@ namespace HuellasDeEsperanzaC_.FormsTOH
 
             if (usuario != null && usuario.VerificarContraseña(contrasena))
             {
-                GestorAdopcion gestorAdopcion = new GestorAdopcion(); 
-                HomeAdminForm homeAdminForm = new HomeAdminForm(usuario, gestorAdopcion);
-                homeAdminForm.Show();
-                //HomeGeneralForm homeForm = new HomeGeneralForm(usuario, gestorAdopcion);
-                //homeForm.Show();
+                GestorAdopcion gestorAdopcion = new GestorAdopcion();
+                if (correo == "diego@diego.com")
+                {
+                    HomeAdminForm homeAdminForm = new HomeAdminForm(usuario, gestorAdopcion);
+                    homeAdminForm.Show();
+                }
+                else
+                {
+                    HomeGeneralForm homeForm = new HomeGeneralForm(usuario, gestorAdopcion);
+                    homeForm.Show();
+                }
                 this.Hide();
             }
             else
             {
                 MetroFramework.MetroMessageBox.Show(this, "Correo o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void tbCorreo_KeyPress(object sender, KeyPressEventArgs e)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace HuellasDeEsperanzaC_.FormsTOH
@@ -130,6 +131,74 @@ namespace HuellasDeEsperanzaC_.FormsTOH
         {
             ConfiguracionForm configuracionForm = new ConfiguracionForm(usuarioActual, gestorAdopcionUser);
             configuracionForm.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            HomeAdminForm homeAdminForm = new HomeAdminForm(usuarioActual, gestorAdopcionUser);
+            homeAdminForm.Show();
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            AdminAddMascot adminAddMascot = new AdminAddMascot(usuarioActual, gestorAdopcionUser);
+            adminAddMascot.Show();
+            this.Close();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ViewReportForm viewReportForm = new ViewReportForm(usuarioActual, gestorAdopcionUser);
+            viewReportForm.Show();
+            this.Close();
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Close();
+        }
+
+        // Constantes para manejar el arrastre de la ventana
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+
+        // Método para permitir arrastrar la ventana desde el panel2
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Libera el control del mouse
+            ReleaseCapture();
+            // Envía un mensaje para iniciar el arrastre de la ventana
+            SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
